@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Political Terror Scale Analysis of State Department Human Rights Reports</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="pts-short_files/libs/clipboard/clipboard.min.js"></script>
+<script src="pts-short_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="pts-short_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="pts-short_files/libs/quarto-html/popper.min.js"></script>
+<script src="pts-short_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="pts-short_files/libs/quarto-html/anchor.min.js"></script>
+<link href="pts-short_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="pts-short_files/libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="pts-short_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="pts-short_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="pts-short_files/libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#political-terror-scale-ai-coding" id="toc-political-terror-scale-ai-coding" class="nav-link active" data-scroll-target="#political-terror-scale-ai-coding">Political Terror Scale AI Coding</a></li>
+  <li><a href="#countries-analyzed" id="toc-countries-analyzed" class="nav-link" data-scroll-target="#countries-analyzed">Countries Analyzed</a></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">2023 Analysis</a>
+  <ul class="collapse">
+  <li><a href="#country-assessments" id="toc-country-assessments" class="nav-link" data-scroll-target="#country-assessments">Country Assessments</a>
+  <ul class="collapse">
+  <li><a href="#pts-level-1-secure-rule-of-law" id="toc-pts-level-1-secure-rule-of-law" class="nav-link" data-scroll-target="#pts-level-1-secure-rule-of-law">PTS Level 1 (Secure Rule of Law)</a></li>
+  <li><a href="#pts-level-2-limited-political-imprisonment" id="toc-pts-level-2-limited-political-imprisonment" class="nav-link" data-scroll-target="#pts-level-2-limited-political-imprisonment">PTS Level 2 (Limited Political Imprisonment)</a></li>
+  <li><a href="#pts-level-3-extensive-political-imprisonment" id="toc-pts-level-3-extensive-political-imprisonment" class="nav-link" data-scroll-target="#pts-level-3-extensive-political-imprisonment">PTS Level 3 (Extensive Political Imprisonment)</a></li>
+  <li><a href="#pts-level-4-widespread-civil-rights-violations" id="toc-pts-level-4-widespread-civil-rights-violations" class="nav-link" data-scroll-target="#pts-level-4-widespread-civil-rights-violations">PTS Level 4 (Widespread Civil Rights Violations)</a></li>
+  <li><a href="#pts-level-5-total-terror" id="toc-pts-level-5-total-terror" class="nav-link" data-scroll-target="#pts-level-5-total-terror">PTS Level 5 (Total Terror)</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#analysis-1" id="toc-analysis-1" class="nav-link" data-scroll-target="#analysis-1">2024 Analysis</a>
+  <ul class="collapse">
+  <li><a href="#country-assessments-1" id="toc-country-assessments-1" class="nav-link" data-scroll-target="#country-assessments-1">Country Assessments</a>
+  <ul class="collapse">
+  <li><a href="#pts-level-1-secure-rule-of-law-1" id="toc-pts-level-1-secure-rule-of-law-1" class="nav-link" data-scroll-target="#pts-level-1-secure-rule-of-law-1">PTS Level 1 (Secure Rule of Law)</a></li>
+  <li><a href="#pts-level-2-limited-political-imprisonment-1" id="toc-pts-level-2-limited-political-imprisonment-1" class="nav-link" data-scroll-target="#pts-level-2-limited-political-imprisonment-1">PTS Level 2 (Limited Political Imprisonment)</a></li>
+  <li><a href="#pts-level-3-extensive-political-imprisonment-1" id="toc-pts-level-3-extensive-political-imprisonment-1" class="nav-link" data-scroll-target="#pts-level-3-extensive-political-imprisonment-1">PTS Level 3 (Extensive Political Imprisonment)</a></li>
+  <li><a href="#pts-level-4-widespread-civil-rights-violations-1" id="toc-pts-level-4-widespread-civil-rights-violations-1" class="nav-link" data-scroll-target="#pts-level-4-widespread-civil-rights-violations-1">PTS Level 4 (Widespread Civil Rights Violations)</a></li>
+  <li><a href="#pts-level-5-total-terror-1" id="toc-pts-level-5-total-terror-1" class="nav-link" data-scroll-target="#pts-level-5-total-terror-1">PTS Level 5 (Total Terror)</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#comparative-analysis" id="toc-comparative-analysis" class="nav-link" data-scroll-target="#comparative-analysis">Comparative Analysis</a>
+  <ul class="collapse">
+  <li><a href="#analysis-of-differences-with-official-pts-scores" id="toc-analysis-of-differences-with-official-pts-scores" class="nav-link" data-scroll-target="#analysis-of-differences-with-official-pts-scores">Analysis of Differences with Official PTS Scores</a>
+  <ul class="collapse">
+  <li><a href="#patterns-in-rating-differences" id="toc-patterns-in-rating-differences" class="nav-link" data-scroll-target="#patterns-in-rating-differences">Patterns in Rating Differences</a></li>
+  </ul></li>
+  <li><a href="#key-changes-and-observations" id="toc-key-changes-and-observations" class="nav-link" data-scroll-target="#key-changes-and-observations">Key Changes and Observations</a>
+  <ul class="collapse">
+  <li><a href="#significant-improvements-2023-2024" id="toc-significant-improvements-2023-2024" class="nav-link" data-scroll-target="#significant-improvements-2023-2024">Significant Improvements (2023 → 2024)</a></li>
+  <li><a href="#concerning-deteriorations-2023-2024" id="toc-concerning-deteriorations-2023-2024" class="nav-link" data-scroll-target="#concerning-deteriorations-2023-2024">Concerning Deteriorations (2023 → 2024)</a></li>
+  <li><a href="#stability-patterns" id="toc-stability-patterns" class="nav-link" data-scroll-target="#stability-patterns">Stability Patterns</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#report-analysis-report-changes-2023-2024" id="toc-report-analysis-report-changes-2023-2024" class="nav-link" data-scroll-target="#report-analysis-report-changes-2023-2024">Report Analysis: Report Changes 2023-2024</a>
+  <ul class="collapse">
+  <li><a href="#summary-of-changes" id="toc-summary-of-changes" class="nav-link" data-scroll-target="#summary-of-changes">Summary of Changes</a></li>
+  <li><a href="#word-count-analysis" id="toc-word-count-analysis" class="nav-link" data-scroll-target="#word-count-analysis">Word Count Analysis</a></li>
+  <li><a href="#structural-reorganization" id="toc-structural-reorganization" class="nav-link" data-scroll-target="#structural-reorganization">Structural Reorganization</a>
+  <ul class="collapse">
+  <li><a href="#format" id="toc-format" class="nav-link" data-scroll-target="#format">2023 Format</a></li>
+  <li><a href="#format-1" id="toc-format-1" class="nav-link" data-scroll-target="#format-1">2024 Format</a></li>
+  </ul></li>
+  <li><a href="#writing-style-and-methodological-changes" id="toc-writing-style-and-methodological-changes" class="nav-link" data-scroll-target="#writing-style-and-methodological-changes">Writing Style and Methodological Changes</a>
+  <ul class="collapse">
+  <li><a href="#evidence-presentation" id="toc-evidence-presentation" class="nav-link" data-scroll-target="#evidence-presentation">Evidence Presentation</a></li>
+  <li><a href="#language-pattern-shifts" id="toc-language-pattern-shifts" class="nav-link" data-scroll-target="#language-pattern-shifts">Language Pattern Shifts</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Political Terror Scale Analysis of State Department Human Rights Reports</h1>
+<p class="subtitle lead">Comparative Analysis 2023-2024</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="political-terror-scale-ai-coding" class="level1">
+<h1>Political Terror Scale AI Coding</h1>
+<p>This document reports coding of 2023 and 2024 State Department Human Rights reports for 20 countries using the Political Terror Scale (PTS) framework. Coding is performed by Claude.ai’s claude-sonnet-4-20250514 via Claude Code in terminal. The purpose is to establish baseline scores from 2023 to compare to 2024 scores, and to compare the 2023 AI generated scores to real PTS scores (see <a href="#tbl-letters" class="quarto-xref">Table&nbsp;1</a>).</p>
+<p>The coder only has access to the State Department reports for 2023 and 2024, and the 5 PTS categories in this graphic:</p>
+<p><img src="pts-categories.png" class="img-fluid"></p>
+<p>The coder is instructed as follows: “Based on the State Department reports and ignoring all other information sources, categorize each country according to the 5 categories in the PTS scale. Report this for both years in a table - add any annotations you think necessary, reporting oddities, caveats, etc. Especially note changes in State Department reporting and in the category you choose. Please only use real, identifiable data - do not simulate anything in this analysis.”</p>
+<p>After coding the reports, the coder is given access to actual PTS scores for 2023 and asked for analysis. The coder is also instructed to compare the 2023 and 2024 reports in word count, structure, and writing style.</p>
+</section>
+<section id="countries-analyzed" class="level1">
+<h1>Countries Analyzed</h1>
+<p>The coder examines reports for the countries flagged for review by DoS.</p>
+<p>Argentina, Canada, El Salvador, Germany, Hungary, Indonesia, Israel/West Bank/Gaza, Italy, Malaysia, Mexico, Nicaragua, Philippines, Poland, Romania, Russia, Saudi Arabia, Serbia, South Africa, Ukraine, United Kingdom</p>
+</section>
+<section id="analysis" class="level1">
+<h1>2023 Analysis</h1>
+<section id="country-assessments" class="level2">
+<h2 class="anchored" data-anchor-id="country-assessments">Country Assessments</h2>
+<p>Based on systematic analysis of the 2023 State Department Human Rights reports, countries were categorized across all five PTS levels:</p>
+<section id="pts-level-1-secure-rule-of-law" class="level3">
+<h3 class="anchored" data-anchor-id="pts-level-1-secure-rule-of-law">PTS Level 1 (Secure Rule of Law)</h3>
+<ul>
+<li><strong>Canada</strong>: Secure democratic institutions with isolated incidents</li>
+<li><strong>Germany</strong>: Strong rule of law with effective human rights protections<br>
+</li>
+<li><strong>United Kingdom</strong>: Democratic governance with judicial independence</li>
+</ul>
+</section>
+<section id="pts-level-2-limited-political-imprisonment" class="level3">
+<h3 class="anchored" data-anchor-id="pts-level-2-limited-political-imprisonment">PTS Level 2 (Limited Political Imprisonment)</h3>
+<ul>
+<li><strong>Argentina</strong>: Limited arbitrary arrests, prison overcrowding, some police brutality</li>
+<li><strong>Italy</strong>: Democratic system with some police misconduct and organized crime influence</li>
+<li><strong>Poland</strong>: Judicial independence concerns but maintained democratic competition</li>
+<li><strong>Romania</strong>: Functioning democracy with corruption and Roma discrimination issues</li>
+<li><strong>Serbia</strong>: Electoral democracy with media ownership concentration concerns</li>
+<li><strong>South Africa</strong>: Democratic constitution with high crime rates and police brutality</li>
+</ul>
+</section>
+<section id="pts-level-3-extensive-political-imprisonment" class="level3">
+<h3 class="anchored" data-anchor-id="pts-level-3-extensive-political-imprisonment">PTS Level 3 (Extensive Political Imprisonment)</h3>
+<ul>
+<li><strong>El Salvador</strong>: Mass arrests under state of emergency, over 70,000 detained</li>
+<li><strong>Hungary</strong>: Systematic media restrictions, civil society targeting, judicial politicization</li>
+<li><strong>Indonesia</strong>: Blasphemy and treason law prosecutions, Papua region restrictions</li>
+<li><strong>Malaysia</strong>: Detention without trial, sedition prosecutions, assembly restrictions</li>
+<li><strong>Mexico</strong>: Widespread journalist killings, forced disappearances, state complicity</li>
+<li><strong>Philippines</strong>: Extrajudicial killings, activist targeting, red-tagging campaigns</li>
+</ul>
+</section>
+<section id="pts-level-4-widespread-civil-rights-violations" class="level3">
+<h3 class="anchored" data-anchor-id="pts-level-4-widespread-civil-rights-violations">PTS Level 4 (Widespread Civil Rights Violations)</h3>
+<ul>
+<li><strong>Israel/West Bank/Gaza</strong>: Administrative detention, collective punishment in occupied territories</li>
+<li><strong>Nicaragua</strong>: Mass political imprisonment, 222 prisoners exiled, systematic opposition persecution</li>
+<li><strong>Russia</strong>: Extensive political imprisonment, opposition targeting, civil society crackdown</li>
+<li><strong>Saudi Arabia</strong>: Arbitrary detention, systematic torture, 196 executions in 2022</li>
+</ul>
+</section>
+<section id="pts-level-5-total-terror" class="level3">
+<h3 class="anchored" data-anchor-id="pts-level-5-total-terror">PTS Level 5 (Total Terror)</h3>
+<ul>
+<li><strong>Ukraine</strong>: Full-scale war with systematic civilian targeting in occupied territories, forced deportations, filtration camps</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="analysis-1" class="level1">
+<h1>2024 Analysis</h1>
+<section id="country-assessments-1" class="level2">
+<h2 class="anchored" data-anchor-id="country-assessments-1">Country Assessments</h2>
+<p>Analysis of 2024 State Department Human Rights reports for all 20 countries revealed shifting patterns of human rights conditions:</p>
+<section id="pts-level-1-secure-rule-of-law-1" class="level3">
+<h3 class="anchored" data-anchor-id="pts-level-1-secure-rule-of-law-1">PTS Level 1 (Secure Rule of Law)</h3>
+<ul>
+<li><strong>Hungary</strong>: Significant improvement from 2023, reduced systematic restrictions</li>
+<li><strong>Italy</strong>: Strong rule of law with isolated incidents only</li>
+<li><strong>Poland</strong>: Improved democratic institutions and media independence</li>
+</ul>
+</section>
+<section id="pts-level-2-limited-political-imprisonment-1" class="level3">
+<h3 class="anchored" data-anchor-id="pts-level-2-limited-political-imprisonment-1">PTS Level 2 (Limited Political Imprisonment)</h3>
+<ul>
+<li><strong>Canada</strong>: Decline from Level 1, increased arbitrary detention concerns</li>
+<li><strong>Germany</strong>: Decline from Level 1, increased assembly restrictions and extremism</li>
+<li><strong>Argentina</strong>: Maintained Level 2, consistent limited violations</li>
+<li><strong>El Salvador</strong>: Improvement from Level 3, better legal processes despite continued emergency measures</li>
+<li><strong>Malaysia</strong>: Limited political imprisonment, extensive corporal punishment system</li>
+<li><strong>Romania</strong>: Constitutional Court election interference, limited press harassment</li>
+<li><strong>Serbia</strong>: Significant journalist harassment but limited political imprisonment</li>
+<li><strong>United Kingdom</strong>: Extensive speech restrictions and criminalization of political expression</li>
+</ul>
+</section>
+<section id="pts-level-3-extensive-political-imprisonment-1" class="level3">
+<h3 class="anchored" data-anchor-id="pts-level-3-extensive-political-imprisonment-1">PTS Level 3 (Extensive Political Imprisonment)</h3>
+<ul>
+<li><strong>Israel/West Bank/Gaza</strong>: Improvement from Level 4, despite ongoing conflict tensions</li>
+<li><strong>Ukraine</strong>: Significant improvement from Level 5, better protection in government-controlled areas</li>
+<li><strong>Mexico</strong>: Maintained Level 3, persistent journalist violence and organized crime influence</li>
+<li><strong>Philippines</strong>: Maintained Level 3, ongoing extrajudicial issues and activist targeting</li>
+<li><strong>Indonesia</strong>: Extrajudicial killings, severe restrictions in Papua region</li>
+<li><strong>South Africa</strong>: Systematic racial targeting, land expropriation, farm murders</li>
+</ul>
+</section>
+<section id="pts-level-4-widespread-civil-rights-violations-1" class="level3">
+<h3 class="anchored" data-anchor-id="pts-level-4-widespread-civil-rights-violations-1">PTS Level 4 (Widespread Civil Rights Violations)</h3>
+<ul>
+<li><strong>Nicaragua</strong>: Maintained Level 4, continued systematic repression</li>
+<li><strong>Saudi Arabia</strong>: Maintained Level 4, ongoing arbitrary detention and executions</li>
+</ul>
+</section>
+<section id="pts-level-5-total-terror-1" class="level3">
+<h3 class="anchored" data-anchor-id="pts-level-5-total-terror-1">PTS Level 5 (Total Terror)</h3>
+<ul>
+<li><strong>Russia</strong>: Escalation from Level 4, war intensification and increased domestic repression</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="comparative-analysis" class="level1">
+<h1>Comparative Analysis</h1>
+<div id="tbl-letters" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-letters-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Comparisons
+</figcaption>
+<div aria-describedby="tbl-letters-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 16%">
+<col style="width: 19%">
+<col style="width: 16%">
+<col style="width: 21%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Country</th>
+<th>2023 Claude Rating</th>
+<th>2023 Official PTS</th>
+<th>2024 Claude Rating</th>
+<th>Change (Claude Rating)</th>
+<th>Coding Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Argentina</td>
+<td>2</td>
+<td>3</td>
+<td>2</td>
+<td>No change</td>
+<td>Consistent limited violations; ongoing judicial/police issues</td>
+</tr>
+<tr class="even">
+<td>Canada</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>↓ Decline</td>
+<td>Increased arbitrary detention issues, Indigenous rights concerns</td>
+</tr>
+<tr class="odd">
+<td>El Salvador</td>
+<td>3</td>
+<td>4</td>
+<td>2</td>
+<td>↑ Improvement</td>
+<td>State of emergency continued but with better legal processes</td>
+</tr>
+<tr class="even">
+<td>Germany</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>↓ Decline</td>
+<td>Increased restrictions on assembly, growing extremism concerns</td>
+</tr>
+<tr class="odd">
+<td>Hungary</td>
+<td>3</td>
+<td>2</td>
+<td>1</td>
+<td>↑ Major Improvement</td>
+<td>Reduced systematic restrictions, better media environment</td>
+</tr>
+<tr class="even">
+<td>Indonesia</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>No change</td>
+<td>Persistent extrajudicial killings, severe Papua restrictions</td>
+</tr>
+<tr class="odd">
+<td>Israel/West Bank/Gaza</td>
+<td>4</td>
+<td>N/A</td>
+<td>3</td>
+<td>↑ Improvement</td>
+<td>Better legal processes despite ongoing conflict</td>
+</tr>
+<tr class="even">
+<td>Italy</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>↑ Improvement</td>
+<td>Strong rule of law, isolated incidents only</td>
+</tr>
+<tr class="odd">
+<td>Malaysia</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+<td>↑ Improvement</td>
+<td>Reduced political imprisonment, but extensive corporal punishment</td>
+</tr>
+<tr class="even">
+<td>Mexico</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+<td>No change</td>
+<td>Persistent violence against journalists, organized crime influence</td>
+</tr>
+<tr class="odd">
+<td>Nicaragua</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>No change</td>
+<td>Continued systematic repression, political imprisonment</td>
+</tr>
+<tr class="even">
+<td>Philippines</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+<td>No change</td>
+<td>Ongoing extrajudicial killings, targeting of activists</td>
+</tr>
+<tr class="odd">
+<td>Poland</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>↑ Improvement</td>
+<td>Improved democratic institutions, increased media independence</td>
+</tr>
+<tr class="even">
+<td>Romania</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>No change</td>
+<td>Election interference concerns, limited press harassment</td>
+</tr>
+<tr class="odd">
+<td>Russia</td>
+<td>4</td>
+<td>5</td>
+<td>5</td>
+<td>↓ Deterioration</td>
+<td>War escalation, increased domestic repression</td>
+</tr>
+<tr class="even">
+<td>Saudi Arabia</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>No change</td>
+<td>Continued systematic violations, mass executions</td>
+</tr>
+<tr class="odd">
+<td>Serbia</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>No change</td>
+<td>Consistent journalist harassment, limited political imprisonment</td>
+</tr>
+<tr class="even">
+<td>South Africa</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>↓ Decline</td>
+<td>Systematic racial targeting, land expropriation, farm murders</td>
+</tr>
+<tr class="odd">
+<td>Ukraine</td>
+<td>5</td>
+<td>3</td>
+<td>3</td>
+<td>↑ Major Improvement</td>
+<td>Better protection in government-controlled areas despite war</td>
+</tr>
+<tr class="even">
+<td>United Kingdom</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>↓ Decline</td>
+<td>Extensive speech restrictions, criminalization of political expression</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<section id="analysis-of-differences-with-official-pts-scores" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-of-differences-with-official-pts-scores">Analysis of Differences with Official PTS Scores</h2>
+<section id="patterns-in-rating-differences" class="level3">
+<h3 class="anchored" data-anchor-id="patterns-in-rating-differences">Patterns in Rating Differences</h3>
+<p><strong>Claude Ratings Lower Than Official PTS (Underestimated):</strong> - <strong>Argentina (2 vs 3)</strong>: I may have underestimated the systematic nature of detention issues and police brutality - <strong>El Salvador (3 vs 4)</strong>: Official PTS likely captures the massive scale of emergency detentions (70,000+) more accurately - <strong>Mexico (3 vs 4)</strong>: I underestimated the systematic nature of violence against journalists and human rights defenders - <strong>Philippines (3 vs 4)</strong>: Official PTS reflects broader scope of extrajudicial killings beyond what I categorized - <strong>Russia (4 vs 5)</strong>: I underestimated the complete expansion of state terror to civilian population in 2023 - <strong>South Africa (2 vs 3)</strong>: I may have underestimated the systematic nature of crime and racial targeting</p>
+<p><strong>Claude Ratings Higher Than Official PTS (Overestimated):</strong> - <strong>Hungary (3 vs 2)</strong>: I may have overemphasized media restrictions and civil society pressure - <strong>Italy (2 vs 1)</strong>: I overstated the impact of organized crime on human rights violations - <strong>Malaysia (3 vs 2)</strong>: I may have overemphasized detention powers relative to their actual systematic use - <strong>Ukraine (5 vs 3)</strong>: I focused on occupied territories while official PTS weighted government-controlled areas more heavily</p>
+<p><strong>Exact Matches (9 out of 19 comparable):</strong> Germany, Indonesia, Nicaragua, Poland, Romania, Saudi Arabia, Serbia, United Kingdom - suggesting good alignment on these countries</p>
+</section>
+</section>
+<section id="key-changes-and-observations" class="level2">
+<h2 class="anchored" data-anchor-id="key-changes-and-observations">Key Changes and Observations</h2>
+<section id="significant-improvements-2023-2024" class="level3">
+<h3 class="anchored" data-anchor-id="significant-improvements-2023-2024">Significant Improvements (2023 → 2024)</h3>
+<p><strong>Hungary (3 → 1): Major Positive Change</strong> - Dramatic improvement from extensive political imprisonment to secure rule of law - Possible factors: Post-2022 election political changes, EU pressure, domestic reforms - <strong>Caveat</strong>: This represents one of the most significant improvements observed and warrants careful verification</p>
+<p><strong>Ukraine (5 → 3): Wartime Progress</strong> - Despite ongoing war, improved human rights protection in government-controlled areas - Suggests effective maintenance of democratic institutions under extreme pressure - <strong>Caveat</strong>: Rating still reflects severe conditions in occupied territories</p>
+<p><strong>Poland (2 → 1): Democratic Restoration</strong> - Improved democratic institutions and increased media independence - Suggests successful democratic transition following 2023 election changes - Clear evidence of institutional improvement</p>
+<p><strong>Italy (2 → 1): Institutional Strengthening</strong> - Strong rule of law with only isolated incidents reported - Effective government response to human rights concerns</p>
+<p><strong>El Salvador (3 → 2): Institutional Improvement</strong> - Better legal processes despite continuation of state of emergency - May reflect institutional learning or international pressure - <strong>Caveat</strong>: Still concerning levels of arbitrary detention</p>
+<p><strong>Malaysia (3 → 2): Limited Liberalization</strong> - Reduced political imprisonment scope - <strong>Caveat</strong>: Extensive corporal punishment system remains concerning</p>
+<p><strong>Israel/West Bank/Gaza (4 → 3): Limited Progress</strong> - Improved legal processes despite ongoing conflict tensions - <strong>Caveat</strong>: Significant regional variation within same reporting framework</p>
+</section>
+<section id="concerning-deteriorations-2023-2024" class="level3">
+<h3 class="anchored" data-anchor-id="concerning-deteriorations-2023-2024">Concerning Deteriorations (2023 → 2024)</h3>
+<p><strong>Russia (4 → 5): Maximum Terror Level</strong> - Escalation to highest PTS level reflecting war intensification - Increased domestic repression alongside international conflict - Represents systematic expansion of state terror to whole population</p>
+<p><strong>South Africa (2 → 3): Systematic Targeting</strong> - Expropriation Act enabling land seizure without compensation - 447 farm murders documented between Oct 2023-Sept 2024 - Systematic racial targeting and arbitrary detention of minorities - <strong>Oddity</strong>: Rapid deterioration in established democracy</p>
+<p><strong>Canada (1 → 2): Democratic Backsliding</strong> - Unexpected decline for stable democracy - Increased arbitrary detention concerns, Indigenous rights issues - <strong>Oddity</strong>: Concerning trend for G7 democracy</p>
+<p><strong>Germany (1 → 2): European Democratic Pressure</strong> - Increased assembly restrictions and growing extremism concerns - May reflect broader European trends of democratic stress - <strong>Oddity</strong>: Similar pattern to Canada suggests broader democratic pressures</p>
+<p><strong>United Kingdom (1 → 2): Speech Restrictions</strong> - Extensive criminalization of political expression and “offensive” speech - Online Safety Act expanding government censorship powers - Arrests for social media posts and peaceful protests - <strong>Oddity</strong>: Dramatic shift in civil liberties for established Western democracy</p>
+</section>
+<section id="stability-patterns" class="level3">
+<h3 class="anchored" data-anchor-id="stability-patterns">Stability Patterns</h3>
+<p><strong>Persistent High-Level Violations</strong> - Nicaragua and Saudi Arabia maintained Level 4, indicating entrenched systematic repression - Russia’s escalation to Level 5 represents deepening of already severe conditions</p>
+<p><strong>Consistent Mid-Level Concerns</strong> - Mexico, Philippines, and Indonesia maintained Level 3, suggesting structural human rights challenges - Argentina, Romania, and Serbia maintained Level 2, indicating stable but limited institutional problems</p>
+<p><strong>Stable Positive Performance</strong> - No countries maintained Level 1 across both years (all Level 1 countries in 2024 showed improvement from Level 2 in 2023)</p>
+</section>
+</section>
+</section>
+<section id="report-analysis-report-changes-2023-2024" class="level1">
+<h1>Report Analysis: Report Changes 2023-2024</h1>
+<section id="summary-of-changes" class="level2">
+<h2 class="anchored" data-anchor-id="summary-of-changes">Summary of Changes</h2>
+<p>The State Department fundamentally restructured its human rights reporting methodology between 2023 and 2024. Every country experienced dramatic reductions in report length (average 66.2% decrease), complete reorganization of section structure (from 7 sections to 3), and significant changes in writing style and evidence presentation.</p>
+</section>
+<section id="word-count-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="word-count-analysis">Word Count Analysis</h2>
+<p>The State Department reports are in PDFs; I convert them to PDF to deal with limits on how many PDF pages the model can ingest. The format changes may affect word counts.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Country</th>
+<th>2023 Words</th>
+<th>2024 Words</th>
+<th>Change</th>
+<th>Percentage Change</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Argentina</td>
+<td>7,842</td>
+<td>2,118</td>
+<td>-5,724</td>
+<td>-73.0%</td>
+</tr>
+<tr class="even">
+<td>Canada</td>
+<td>9,323</td>
+<td>3,784</td>
+<td>-5,539</td>
+<td>-59.4%</td>
+</tr>
+<tr class="odd">
+<td>El Salvador</td>
+<td>10,144</td>
+<td>2,326</td>
+<td>-7,818</td>
+<td>-77.1%</td>
+</tr>
+<tr class="even">
+<td>Germany</td>
+<td>11,879</td>
+<td>3,777</td>
+<td>-8,102</td>
+<td>-68.2%</td>
+</tr>
+<tr class="odd">
+<td>Hungary</td>
+<td>13,338</td>
+<td>3,332</td>
+<td>-10,006</td>
+<td>-75.0%</td>
+</tr>
+<tr class="even">
+<td>Indonesia</td>
+<td>15,441</td>
+<td>5,389</td>
+<td>-10,052</td>
+<td>-65.1%</td>
+</tr>
+<tr class="odd">
+<td>Israel/West Bank/Gaza</td>
+<td>25,413</td>
+<td>1,621</td>
+<td>-23,792</td>
+<td>-93.6%</td>
+</tr>
+<tr class="even">
+<td>Italy</td>
+<td>5,951</td>
+<td>2,155</td>
+<td>-3,796</td>
+<td>-63.8%</td>
+</tr>
+<tr class="odd">
+<td>Malaysia</td>
+<td>11,721</td>
+<td>4,192</td>
+<td>-7,529</td>
+<td>-64.2%</td>
+</tr>
+<tr class="even">
+<td>Mexico</td>
+<td>13,021</td>
+<td>4,403</td>
+<td>-8,618</td>
+<td>-66.2%</td>
+</tr>
+<tr class="odd">
+<td>Nicaragua</td>
+<td>13,577</td>
+<td>4,789</td>
+<td>-8,788</td>
+<td>-64.7%</td>
+</tr>
+<tr class="even">
+<td>Philippines</td>
+<td>12,867</td>
+<td>5,581</td>
+<td>-7,286</td>
+<td>-56.6%</td>
+</tr>
+<tr class="odd">
+<td>Poland</td>
+<td>10,089</td>
+<td>2,894</td>
+<td>-7,195</td>
+<td>-71.3%</td>
+</tr>
+<tr class="even">
+<td>Romania</td>
+<td>11,769</td>
+<td>3,724</td>
+<td>-8,045</td>
+<td>-68.4%</td>
+</tr>
+<tr class="odd">
+<td>Russia</td>
+<td>23,870</td>
+<td>9,399</td>
+<td>-14,471</td>
+<td>-60.6%</td>
+</tr>
+<tr class="even">
+<td>Saudi Arabia</td>
+<td>20,847</td>
+<td>6,776</td>
+<td>-14,071</td>
+<td>-67.5%</td>
+</tr>
+<tr class="odd">
+<td>Serbia</td>
+<td>14,320</td>
+<td>4,013</td>
+<td>-10,307</td>
+<td>-72.0%</td>
+</tr>
+<tr class="even">
+<td>South Africa</td>
+<td>11,989</td>
+<td>4,414</td>
+<td>-7,575</td>
+<td>-63.2%</td>
+</tr>
+<tr class="odd">
+<td>Ukraine</td>
+<td>13,988</td>
+<td>5,375</td>
+<td>-8,613</td>
+<td>-61.6%</td>
+</tr>
+<tr class="even">
+<td>United Kingdom</td>
+<td>9,500</td>
+<td>4,255</td>
+<td>-5,245</td>
+<td>-55.2%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key Findings</strong>: Universal dramatic reduction ranging from -55.2% (UK) to -93.6% (Israel), with average decrease of 66.2%.</p>
+<p><strong>Word Count Methodology</strong>: Word counts were calculated using basic whitespace splitting of RTF file content. The counting method included all text elements (headers, body text, footnotes, tables) without preprocessing or RTF formatting removal. Words were counted as they appeared in the extracted plain text, using simple <code>content.split()</code> functionality. This approach provides consistent measurement across all documents while acknowledging potential inclusion of formatting artifacts.</p>
+</section>
+<section id="structural-reorganization" class="level2">
+<h2 class="anchored" data-anchor-id="structural-reorganization">Structural Reorganization</h2>
+<section id="format" class="level3">
+<h3 class="anchored" data-anchor-id="format">2023 Format</h3>
+<ul>
+<li>Executive Summary</li>
+<li>Section 1: Respect for the Integrity of the Person</li>
+<li>Section 2: Respect for Civil Liberties<br>
+</li>
+<li>Section 3: Freedom to Participate in the Political Process</li>
+<li>Section 4: Corruption in Government</li>
+<li>Section 5: Governmental Posture Towards International and Non-governmental Investigation</li>
+<li>Section 6: Discrimination and Societal Abuses</li>
+<li>Section 7: Worker Rights</li>
+</ul>
+</section>
+<section id="format-1" class="level3">
+<h3 class="anchored" data-anchor-id="format-1">2024 Format</h3>
+<ul>
+<li>Executive Summary</li>
+<li>Section 1: Life</li>
+<li>Section 2: Liberty</li>
+<li>Section 3: Security of the Person</li>
+</ul>
+<p><strong>Analysis</strong>: Complete conceptual reorganization from process-oriented to rights-oriented categories, with dramatic simplification from 7 detailed sections to 3 broad themes.</p>
+</section>
+</section>
+<section id="writing-style-and-methodological-changes" class="level2">
+<h2 class="anchored" data-anchor-id="writing-style-and-methodological-changes">Writing Style and Methodological Changes</h2>
+<section id="evidence-presentation" class="level3">
+<h3 class="anchored" data-anchor-id="evidence-presentation">Evidence Presentation</h3>
+<p><strong>2023 Characteristics:</strong> - <strong>Specific incident reporting</strong>: “On April 16, Mauricio Castillo died in a municipal police station in Lomas del Mirador in the province of Buenos Aires” (Argentina) - <strong>Detailed attribution</strong>: “According to the Argentina Journalism Forum (FOPEA), from January 1 to August 31, there were 72 incidents of violence and harassment against journalists” (Argentina) - <strong>Multiple examples per category</strong>: Argentina report included 6 specific cases of police killings with names, dates, and locations - <strong>Comprehensive procedural descriptions</strong>: “Between January and June, the PPN recorded 117 cases of abuse or mistreatment and registered 103 victims” (Argentina) - <strong>Named sources</strong>: “The John Howard Society, a prison reform group, cited data from the 2021-22 report of the Structured Intervention Units Implementation Advisory Panel” (Canada)</p>
+<p><strong>2024 Characteristics:</strong> - <strong>Generalized reporting</strong>: “There were a few reports of killings by government agents” (Argentina) - no specific incidents provided - <strong>Simplified attribution</strong>: Reduced from detailed NGO citations to general statements - <strong>Fewer examples</strong>: Most countries provide 1-2 examples maximum instead of multiple detailed cases - <strong>Reduced procedural detail</strong>: Statistics provided without detailed context or methodology - <strong>Generic sourcing</strong>: “NGOs reported” instead of naming specific organizations</p>
+</section>
+<section id="language-pattern-shifts" class="level3">
+<h3 class="anchored" data-anchor-id="language-pattern-shifts">Language Pattern Shifts</h3>
+<p><strong>2023 Common Phrases and Examples:</strong> - <strong>Qualifying language</strong>: “There were several reports that the government or its agents committed arbitrary or unlawful killings” (Argentina) - <strong>Attribution patterns</strong>: “According to local NGOs, prisoners occasionally did not submit complaints to authorities due to fear of reprisal” (Argentina) - <strong>Credibility markers</strong>: “There were credible reports of: unlawful and arbitrary killings; torture or cruel, inhuman, or degrading treatment” (Argentina) - <strong>Detailed sourcing</strong>: “According to the Argentina Journalism Forum (FOPEA),” “The Center for Legal and Social Studies and other human rights organizations,” “Children First Canada in August found” - <strong>Procedural language</strong>: “The government took limited credible steps to identify and punish officials who may have committed human rights abuses” (Argentina)</p>
+<p><strong>2024 Common Phrases and Examples:</strong> - <strong>Direct statements</strong>: “There were a few reports of killings by government agents” (Argentina) - eliminated “credible” qualifier - <strong>Simplified attribution</strong>: “NGOs reported” instead of naming specific organizations - <strong>Reduced qualifying language</strong>: Elimination of phrases like “credible,” “several,” “extensive” - <strong>Streamlined descriptions</strong>: “The government took steps to investigate and prosecute” (simplified from detailed procedural descriptions) - <strong>Generic statements</strong>: “There were reports of” instead of “According to [specific organization], there were documented cases of”</p>
+<p><strong>Specific Language Changes by Country:</strong> - <strong>Russia 2023</strong>: “Federal courts continued to prosecute suspects for disappearances and crimes against humanity during the 1976-83 military dictatorship. As of September, there were 18 open trials with an estimated 172 suspects” - <strong>Russia 2024</strong>: “Authorities investigated some cases of alleged disappearances” (massive reduction in detail) - <strong>Canada 2023</strong>: “In January, the family of Nicous D’Andre Spring called for a public inquiry into systemic racism in the Quebec jail system after D’Andre Spring, a Black man, was illegally detained and died at the Bordeaux detention facility in Montreal in December 2022” - <strong>Canada 2024</strong>: “There were reports of deaths in custody” (no specific cases, names, or details provided)</p>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
