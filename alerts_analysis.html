@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.30">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Data Analysis Report">
+
+<title>Fall 2025 Student Alerts Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="alerts_analysis_files/libs/clipboard/clipboard.min.js"></script>
+<script src="alerts_analysis_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="alerts_analysis_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="alerts_analysis_files/libs/quarto-html/popper.min.js"></script>
+<script src="alerts_analysis_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="alerts_analysis_files/libs/quarto-html/anchor.min.js"></script>
+<link href="alerts_analysis_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="alerts_analysis_files/libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="alerts_analysis_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="alerts_analysis_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="alerts_analysis_files/libs/bootstrap/bootstrap-8a894fcc3cb5e37eb5bf30def131be2f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#executive-summary" id="toc-executive-summary" class="nav-link active" data-scroll-target="#executive-summary">Executive Summary</a></li>
+  <li><a href="#alert-distribution-overview" id="toc-alert-distribution-overview" class="nav-link" data-scroll-target="#alert-distribution-overview">1. Alert Distribution Overview</a>
+  <ul class="collapse">
+  <li><a href="#by-alert-level" id="toc-by-alert-level" class="nav-link" data-scroll-target="#by-alert-level">By Alert Level</a></li>
+  <li><a href="#by-alert-type" id="toc-by-alert-type" class="nav-link" data-scroll-target="#by-alert-type">By Alert Type</a></li>
+  </ul></li>
+  <li><a href="#course-and-department-analysis" id="toc-course-and-department-analysis" class="nav-link" data-scroll-target="#course-and-department-analysis">2. Course and Department Analysis</a>
+  <ul class="collapse">
+  <li><a href="#which-departments-generate-the-most-alerts" id="toc-which-departments-generate-the-most-alerts" class="nav-link" data-scroll-target="#which-departments-generate-the-most-alerts">Which Departments Generate the Most Alerts?</a></li>
+  <li><a href="#department-alert-patterns-and-outcomes" id="toc-department-alert-patterns-and-outcomes" class="nav-link" data-scroll-target="#department-alert-patterns-and-outcomes">Department Alert Patterns and Outcomes</a></li>
+  <li><a href="#which-instructors-submit-the-most-alerts" id="toc-which-instructors-submit-the-most-alerts" class="nav-link" data-scroll-target="#which-instructors-submit-the-most-alerts">Which Instructors Submit the Most Alerts?</a></li>
+  <li><a href="#specific-courses-with-high-alert-volume" id="toc-specific-courses-with-high-alert-volume" class="nav-link" data-scroll-target="#specific-courses-with-high-alert-volume">Specific Courses with High Alert Volume</a></li>
+  </ul></li>
+  <li><a href="#student-outcomes-analysis" id="toc-student-outcomes-analysis" class="nav-link" data-scroll-target="#student-outcomes-analysis">3. Student Outcomes Analysis</a>
+  <ul class="collapse">
+  <li><a href="#overall-passfail-rates" id="toc-overall-passfail-rates" class="nav-link" data-scroll-target="#overall-passfail-rates">Overall Pass/Fail Rates</a></li>
+  <li><a href="#outcomes-by-alert-level" id="toc-outcomes-by-alert-level" class="nav-link" data-scroll-target="#outcomes-by-alert-level">Outcomes by Alert Level</a></li>
+  <li><a href="#outcomes-by-academic-standing" id="toc-outcomes-by-academic-standing" class="nav-link" data-scroll-target="#outcomes-by-academic-standing">Outcomes by Academic Standing</a></li>
+  </ul></li>
+  <li><a href="#special-populations-eop-athletes-and-sss-students" id="toc-special-populations-eop-athletes-and-sss-students" class="nav-link" data-scroll-target="#special-populations-eop-athletes-and-sss-students">4. Special Populations: EOP, Athletes, and SSS Students</a>
+  <ul class="collapse">
+  <li><a href="#overview-of-special-populations" id="toc-overview-of-special-populations" class="nav-link" data-scroll-target="#overview-of-special-populations">Overview of Special Populations</a></li>
+  <li><a href="#alert-levels-by-population" id="toc-alert-levels-by-population" class="nav-link" data-scroll-target="#alert-levels-by-population">Alert Levels by Population</a></li>
+  <li><a href="#outcomes-by-population" id="toc-outcomes-by-population" class="nav-link" data-scroll-target="#outcomes-by-population">Outcomes by Population</a></li>
+  <li><a href="#which-departments-are-special-populations-taking" id="toc-which-departments-are-special-populations-taking" class="nav-link" data-scroll-target="#which-departments-are-special-populations-taking">Which Departments Are Special Populations Taking?</a></li>
+  <li><a href="#gpa-comparison-across-populations" id="toc-gpa-comparison-across-populations" class="nav-link" data-scroll-target="#gpa-comparison-across-populations">GPA Comparison Across Populations</a></li>
+  <li><a href="#do-special-populations-differ-after-accounting-for-gpa" id="toc-do-special-populations-differ-after-accounting-for-gpa" class="nav-link" data-scroll-target="#do-special-populations-differ-after-accounting-for-gpa">Do Special Populations Differ After Accounting for GPA?</a></li>
+  </ul></li>
+  <li><a href="#predicting-outcomes-what-factors-matter-most" id="toc-predicting-outcomes-what-factors-matter-most" class="nav-link" data-scroll-target="#predicting-outcomes-what-factors-matter-most">5. Predicting Outcomes: What Factors Matter Most?</a>
+  <ul class="collapse">
+  <li><a href="#the-impact-of-gpa" id="toc-the-impact-of-gpa" class="nav-link" data-scroll-target="#the-impact-of-gpa">The Impact of GPA</a></li>
+  <li><a href="#comparing-risk-factors" id="toc-comparing-risk-factors" class="nav-link" data-scroll-target="#comparing-risk-factors">Comparing Risk Factors</a></li>
+  <li><a href="#understanding-the-results-plain-language" id="toc-understanding-the-results-plain-language" class="nav-link" data-scroll-target="#understanding-the-results-plain-language">Understanding the Results (Plain Language)</a></li>
+  <li><a href="#practical-probability-table" id="toc-practical-probability-table" class="nav-link" data-scroll-target="#practical-probability-table">Practical Probability Table</a></li>
+  </ul></li>
+  <li><a href="#using-low-alert-students-as-a-pseudo-control-group" id="toc-using-low-alert-students-as-a-pseudo-control-group" class="nav-link" data-scroll-target="#using-low-alert-students-as-a-pseudo-control-group">6. Using Low Alert Students as a Pseudo-Control Group</a>
+  <ul class="collapse">
+  <li><a href="#the-idea" id="toc-the-idea" class="nav-link" data-scroll-target="#the-idea">The Idea</a></li>
+  <li><a href="#profiling-low-alert-students" id="toc-profiling-low-alert-students" class="nav-link" data-scroll-target="#profiling-low-alert-students">Profiling Low Alert Students</a></li>
+  <li><a href="#building-the-baseline-model" id="toc-building-the-baseline-model" class="nav-link" data-scroll-target="#building-the-baseline-model">Building the Baseline Model</a></li>
+  <li><a href="#applying-the-baseline-to-mediumhigh-alert-students" id="toc-applying-the-baseline-to-mediumhigh-alert-students" class="nav-link" data-scroll-target="#applying-the-baseline-to-mediumhigh-alert-students">Applying the Baseline to Medium/High Alert Students</a></li>
+  <li><a href="#breaking-down-by-gpa" id="toc-breaking-down-by-gpa" class="nav-link" data-scroll-target="#breaking-down-by-gpa">Breaking Down by GPA</a></li>
+  <li><a href="#individual-level-analysis" id="toc-individual-level-analysis" class="nav-link" data-scroll-target="#individual-level-analysis">Individual-Level Analysis</a></li>
+  <li><a href="#statistical-test" id="toc-statistical-test" class="nav-link" data-scroll-target="#statistical-test">Statistical Test</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  <li><a href="#important-caveats" id="toc-important-caveats" class="nav-link" data-scroll-target="#important-caveats">Important Caveats</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">7. Summary</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Fall 2025 Student Alerts Analysis</h1>
+<p class="subtitle lead">Harpur College, Binghamton University</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Data Analysis Report </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="executive-summary" class="level2">
+<h2 class="anchored" data-anchor-id="executive-summary">Executive Summary</h2>
+<p>This analysis examines <strong>4583 academic alerts</strong> raised for <strong>3250 students</strong> at Harpur College during Fall 2025. The central question is whether early warning alerts enable interventions that improve student outcomes.</p>
+<p><strong>Key Findings:</strong></p>
+<ul>
+<li>Students receiving only Low (positive) alerts have significantly better outcomes than those receiving Medium or High alerts</li>
+<li>Cumulative GPA is the strongest predictor of outcomes - a student with a 3.0 GPA has about a 13% chance of failing, while a student with a 2.0 GPA has about a 35% chance</li>
+<li>Certain departments (Biology, Chemistry, Math) generate more alerts, particularly warning alerts</li>
+<li>EOP and SSS students receive proportionally more Medium/High alerts but show similar outcomes when controlling for GPA</li>
+<li>The data reveal a fundamental challenge: alerts identify struggling students, but cannot tell us whether interventions help</li>
+</ul>
+<hr>
+</section>
+<section id="alert-distribution-overview" class="level2">
+<h2 class="anchored" data-anchor-id="alert-distribution-overview">1. Alert Distribution Overview</h2>
+<section id="by-alert-level" class="level3">
+<h3 class="anchored" data-anchor-id="by-alert-level">By Alert Level</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/alert-distribution-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="by-alert-type" class="level3">
+<h3 class="anchored" data-anchor-id="by-alert-type">By Alert Type</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/alert-subjects-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="course-and-department-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="course-and-department-analysis">2. Course and Department Analysis</h2>
+<section id="which-departments-generate-the-most-alerts" class="level3">
+<h3 class="anchored" data-anchor-id="which-departments-generate-the-most-alerts">Which Departments Generate the Most Alerts?</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/dept-alerts-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Top 10 Departments by Alert Volume</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Department</th>
+<th style="text-align: right;">Total Alerts</th>
+<th style="text-align: right;">Low</th>
+<th style="text-align: right;">Medium</th>
+<th style="text-align: right;">High</th>
+<th style="text-align: left;">% Warning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CHEM</td>
+<td style="text-align: right;">778</td>
+<td style="text-align: right;">442</td>
+<td style="text-align: right;">152</td>
+<td style="text-align: right;">184</td>
+<td style="text-align: left;">43%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BIOL</td>
+<td style="text-align: right;">526</td>
+<td style="text-align: right;">214</td>
+<td style="text-align: right;">277</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: left;">59%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PSYC</td>
+<td style="text-align: right;">439</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">244</td>
+<td style="text-align: right;">143</td>
+<td style="text-align: left;">88%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MATH</td>
+<td style="text-align: right;">386</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">182</td>
+<td style="text-align: right;">139</td>
+<td style="text-align: left;">83%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WRIT</td>
+<td style="text-align: right;">246</td>
+<td style="text-align: right;">149</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: left;">39%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GEOG</td>
+<td style="text-align: right;">229</td>
+<td style="text-align: right;">210</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">8%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HARP</td>
+<td style="text-align: right;">208</td>
+<td style="text-align: right;">193</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">7%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">THEA</td>
+<td style="text-align: right;">205</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: left;">27%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ANTH</td>
+<td style="text-align: right;">199</td>
+<td style="text-align: right;">117</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: left;">41%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HWS</td>
+<td style="text-align: right;">177</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: left;">47%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="department-alert-patterns-and-outcomes" class="level3">
+<h3 class="anchored" data-anchor-id="department-alert-patterns-and-outcomes">Department Alert Patterns and Outcomes</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/dept-outcomes-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="which-instructors-submit-the-most-alerts" class="level3">
+<h3 class="anchored" data-anchor-id="which-instructors-submit-the-most-alerts">Which Instructors Submit the Most Alerts?</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/instructor-alerts-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/instructor-style-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Interpretation:</strong> Instructors in the upper-left quadrant issue mostly warning alerts (few positive, many serious). Those in the lower-right issue mostly positive alerts. This reflects both course difficulty and individual instructor approaches to the alert system.</p>
+</section>
+<section id="specific-courses-with-high-alert-volume" class="level3">
+<h3 class="anchored" data-anchor-id="specific-courses-with-high-alert-volume">Specific Courses with High Alert Volume</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Courses with Most Alerts</caption>
+<colgroup>
+<col style="width: 51%">
+<col style="width: 8%">
+<col style="width: 11%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Course</th>
+<th style="text-align: right;">Alerts</th>
+<th style="text-align: right;">Students</th>
+<th style="text-align: left;">% Low</th>
+<th style="text-align: left;">% High</th>
+<th style="text-align: left;">Fail Rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CHEM 231 - Organic Chemistry I</td>
+<td style="text-align: right;">482</td>
+<td style="text-align: right;">431</td>
+<td style="text-align: left;">67%</td>
+<td style="text-align: left;">24%</td>
+<td style="text-align: left;">13%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BIOL 114 - Intro to Organisms &amp; Pops Biol</td>
+<td style="text-align: right;">237</td>
+<td style="text-align: right;">237</td>
+<td style="text-align: left;">52%</td>
+<td style="text-align: left;">0%</td>
+<td style="text-align: left;">5%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HARP 170 - FRI Research Methods</td>
+<td style="text-align: right;">207</td>
+<td style="text-align: right;">203</td>
+<td style="text-align: left;">93%</td>
+<td style="text-align: left;">0%</td>
+<td style="text-align: left;">1%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PSYC 111 - General Psychology</td>
+<td style="text-align: right;">193</td>
+<td style="text-align: right;">166</td>
+<td style="text-align: left;">9%</td>
+<td style="text-align: left;">19%</td>
+<td style="text-align: left;">26%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WRIT 111 - Inquiry and Academic Writing</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: left;">56%</td>
+<td style="text-align: left;">25%</td>
+<td style="text-align: left;">25%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GEOG 151 - World Regional Geography</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: left;">99%</td>
+<td style="text-align: left;">0%</td>
+<td style="text-align: left;">2%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MATH 224 - Differential Calculus</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: left;">31%</td>
+<td style="text-align: left;">22%</td>
+<td style="text-align: left;">23%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BIOL 113 - Intro to Cell &amp; Molecular Biol</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: left;">0%</td>
+<td style="text-align: left;">1%</td>
+<td style="text-align: left;">12%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PSYC 344 - Research Methods (LEC)</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: left;">6%</td>
+<td style="text-align: left;">68%</td>
+<td style="text-align: left;">42%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CHEM 105 - General Chemistry II</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: left;">65%</td>
+<td style="text-align: left;">10%</td>
+<td style="text-align: left;">11%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ANTH 167 - Introduction to Archaeology</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: left;">58%</td>
+<td style="text-align: left;">27%</td>
+<td style="text-align: left;">17%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CHEM 106 - General Chemistry Lab (LEC)</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: left;">19%</td>
+<td style="text-align: left;">36%</td>
+<td style="text-align: left;">22%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="student-outcomes-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="student-outcomes-analysis">3. Student Outcomes Analysis</h2>
+<section id="overall-passfail-rates" class="level3">
+<h3 class="anchored" data-anchor-id="overall-passfail-rates">Overall Pass/Fail Rates</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/outcome-distribution-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="outcomes-by-alert-level" class="level3">
+<h3 class="anchored" data-anchor-id="outcomes-by-alert-level">Outcomes by Alert Level</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/outcomes-by-alert-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="outcomes-by-academic-standing" class="level3">
+<h3 class="anchored" data-anchor-id="outcomes-by-academic-standing">Outcomes by Academic Standing</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/outcomes-by-standing-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="special-populations-eop-athletes-and-sss-students" class="level2">
+<h2 class="anchored" data-anchor-id="special-populations-eop-athletes-and-sss-students">4. Special Populations: EOP, Athletes, and SSS Students</h2>
+<section id="overview-of-special-populations" class="level3">
+<h3 class="anchored" data-anchor-id="overview-of-special-populations">Overview of Special Populations</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Student Counts by Population</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Group</th>
+<th style="text-align: right;">Count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Total Students</td>
+<td style="text-align: right;">3250</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EOP Students</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Athletes</td>
+<td style="text-align: right;">65</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SSS Students</td>
+<td style="text-align: right;">206</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="alert-levels-by-population" class="level3">
+<h3 class="anchored" data-anchor-id="alert-levels-by-population">Alert Levels by Population</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/special-pop-alerts-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Alert Distribution by Population (count and percentage)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Population</th>
+<th style="text-align: left;">Low</th>
+<th style="text-align: left;">Medium</th>
+<th style="text-align: left;">High</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Athlete</td>
+<td style="text-align: left;">35 (48%)</td>
+<td style="text-align: left;">22 (30%)</td>
+<td style="text-align: left;">16 (22%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EOP</td>
+<td style="text-align: left;">2 (12%)</td>
+<td style="text-align: left;">7 (41%)</td>
+<td style="text-align: left;">8 (47%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">General</td>
+<td style="text-align: left;">1987 (47%)</td>
+<td style="text-align: left;">1348 (32%)</td>
+<td style="text-align: left;">865 (21%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SSS</td>
+<td style="text-align: left;">113 (39%)</td>
+<td style="text-align: left;">104 (35%)</td>
+<td style="text-align: left;">76 (26%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="outcomes-by-population" class="level3">
+<h3 class="anchored" data-anchor-id="outcomes-by-population">Outcomes by Population</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/special-pop-outcomes-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="which-departments-are-special-populations-taking" class="level3">
+<h3 class="anchored" data-anchor-id="which-departments-are-special-populations-taking">Which Departments Are Special Populations Taking?</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/special-pop-depts-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="gpa-comparison-across-populations" class="level3">
+<h3 class="anchored" data-anchor-id="gpa-comparison-across-populations">GPA Comparison Across Populations</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/special-pop-gpa-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="do-special-populations-differ-after-accounting-for-gpa" class="level3">
+<h3 class="anchored" data-anchor-id="do-special-populations-differ-after-accounting-for-gpa">Do Special Populations Differ After Accounting for GPA?</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/special-pop-gpa-controlled-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Key Finding:</strong> Much of the difference in outcomes between populations can be explained by differences in incoming GPA. When comparing students with similar GPAs, the gaps between populations narrow considerably.</p>
+<hr>
+</section>
+</section>
+<section id="predicting-outcomes-what-factors-matter-most" class="level2">
+<h2 class="anchored" data-anchor-id="predicting-outcomes-what-factors-matter-most">5. Predicting Outcomes: What Factors Matter Most?</h2>
+<p>We used a statistical model (logistic regression) to understand which factors best predict whether a student will fail or withdraw from a course. Rather than showing technical statistics, we present the results as <strong>predicted probabilities</strong> - the estimated chance of failing for different types of students.</p>
+<section id="the-impact-of-gpa" class="level3">
+<h3 class="anchored" data-anchor-id="the-impact-of-gpa">The Impact of GPA</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/gpa-effect-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="comparing-risk-factors" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-risk-factors">Comparing Risk Factors</h3>
+<p>To understand how different factors affect outcomes, we compare predicted fail probabilities for hypothetical students. We start with a <strong>typical student</strong> (2.5 GPA, Good Standing, received a Medium alert) and then change one factor at a time to see how much it matters.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/scenario-comparison-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="understanding-the-results-plain-language" class="level3">
+<h3 class="anchored" data-anchor-id="understanding-the-results-plain-language">Understanding the Results (Plain Language)</h3>
+<p>The model tells us:</p>
+<p><strong>What increases risk of failing:</strong></p>
+<ul>
+<li><p><strong>Lower GPA</strong> is by far the biggest factor. A student with a 2.0 GPA is roughly <strong>3 times more likely</strong> to fail compared to a student with a 3.0 GPA (holding other factors constant).</p></li>
+<li><p><strong>High alerts</strong> (vs.&nbsp;Low alerts): Students receiving High alerts are about <strong>38.4 times more likely</strong> to fail than those with only Low alerts - but this partly reflects that High alerts go to already-struggling students.</p></li>
+<li><p><strong>Poor academic standing</strong>: Students on Probation or Dismissal face substantially higher risk, independent of their current GPA.</p></li>
+</ul>
+<p><strong>What the model tells us about special populations:</strong></p>
+<ul>
+<li>After controlling for GPA, academic standing, and alert level, <strong>EOP, Athlete, and SSS status</strong> show relatively modest effects. This suggests these students’ outcomes are largely explained by their academic preparation (GPA) rather than their population status.</li>
+</ul>
+</section>
+<section id="practical-probability-table" class="level3">
+<h3 class="anchored" data-anchor-id="practical-probability-table">Practical Probability Table</h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Predicted Fail/Withdraw Probability by GPA and Alert Level (Good Standing students)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">GPA</th>
+<th style="text-align: left;">Low</th>
+<th style="text-align: left;">Medium</th>
+<th style="text-align: left;">High</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1.5</td>
+<td style="text-align: left;">6%</td>
+<td style="text-align: left;">36%</td>
+<td style="text-align: left;">72%</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2.0</td>
+<td style="text-align: left;">4%</td>
+<td style="text-align: left;">25%</td>
+<td style="text-align: left;">61%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2.5</td>
+<td style="text-align: left;">2%</td>
+<td style="text-align: left;">17%</td>
+<td style="text-align: left;">48%</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3.0</td>
+<td style="text-align: left;">1%</td>
+<td style="text-align: left;">11%</td>
+<td style="text-align: left;">36%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3.5</td>
+<td style="text-align: left;">1%</td>
+<td style="text-align: left;">7%</td>
+<td style="text-align: left;">25%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>How to read this table:</strong> A student with a 2.5 GPA who received a High alert has approximately the probability shown in the table of failing or withdrawing from that course. Students with higher GPAs and lower alert levels have much better odds.</p>
+<hr>
+</section>
+</section>
+<section id="using-low-alert-students-as-a-pseudo-control-group" class="level2">
+<h2 class="anchored" data-anchor-id="using-low-alert-students-as-a-pseudo-control-group">6. Using Low Alert Students as a Pseudo-Control Group</h2>
+<section id="the-idea" class="level3">
+<h3 class="anchored" data-anchor-id="the-idea">The Idea</h3>
+<p>Students receiving <strong>Low alerts</strong> (compliments like “Keep up the good work!”) weren’t flagged for problems - instructors simply noticed them doing well. These students might approximate what happens “naturally” without warning or intervention. If we assume this, we can:</p>
+<ol type="1">
+<li>Build a model of the GPA → outcome relationship using <strong>only</strong> Low alert students</li>
+<li>Apply that model to Medium/High alert students to predict their “expected” outcomes</li>
+<li>Compare actual outcomes to expected outcomes</li>
+</ol>
+<p>If actual outcomes are <strong>better than expected</strong>, it might suggest alerts + intervention helped. If actual outcomes are <strong>worse than expected</strong>, either intervention didn’t help or these students have unmeasured risk factors.</p>
+</section>
+<section id="profiling-low-alert-students" class="level3">
+<h3 class="anchored" data-anchor-id="profiling-low-alert-students">Profiling Low Alert Students</h3>
+<p>First, let’s see who the Low alert students are:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Comparing Low Alert Students to Medium/High Alert Students</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Characteristic</th>
+<th style="text-align: left;">Low Alert Students</th>
+<th style="text-align: left;">Medium/High Alert Students</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">N</td>
+<td style="text-align: left;">1589</td>
+<td style="text-align: left;">1620</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean Cumulative GPA</td>
+<td style="text-align: left;">3.6</td>
+<td style="text-align: left;">2.72</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Median Cumulative GPA</td>
+<td style="text-align: left;">3.69</td>
+<td style="text-align: left;">2.83</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">% Good Standing</td>
+<td style="text-align: left;">100%</td>
+<td style="text-align: left;">88%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">% EOP</td>
+<td style="text-align: left;">0%</td>
+<td style="text-align: left;">0%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">% Athlete</td>
+<td style="text-align: left;">2%</td>
+<td style="text-align: left;">2%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">% SSS</td>
+<td style="text-align: left;">5%</td>
+<td style="text-align: left;">7%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pass Rate</td>
+<td style="text-align: left;">99%</td>
+<td style="text-align: left;">73%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/gpa-distribution-comparison-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="building-the-baseline-model" class="level3">
+<h3 class="anchored" data-anchor-id="building-the-baseline-model">Building the Baseline Model</h3>
+<p>We fit a model using <strong>only Low alert students</strong> to estimate the “natural” relationship between student characteristics and outcomes - what happens when students are doing fine and just happen to get noticed positively.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/baseline-model-curve-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="applying-the-baseline-to-mediumhigh-alert-students" class="level3">
+<h3 class="anchored" data-anchor-id="applying-the-baseline-to-mediumhigh-alert-students">Applying the Baseline to Medium/High Alert Students</h3>
+<p>Now we apply the baseline model to students who received Medium or High alerts. This gives us their <strong>expected</strong> fail rate based on what we’d predict for Low alert students with similar characteristics.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/actual-vs-expected-plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Actual vs.&nbsp;Expected Fail Rates for Medium/High Alert Students</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Alert Level</th>
+<th style="text-align: right;">N</th>
+<th style="text-align: left;">Actual Fail Rate</th>
+<th style="text-align: left;">Expected Fail Rate</th>
+<th style="text-align: left;">Difference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Medium</td>
+<td style="text-align: right;">949</td>
+<td style="text-align: left;">13.6%</td>
+<td style="text-align: left;">5.5%</td>
+<td style="text-align: left;">+8.1%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">High</td>
+<td style="text-align: right;">671</td>
+<td style="text-align: left;">46.9%</td>
+<td style="text-align: left;">12.5%</td>
+<td style="text-align: left;">+34.5%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="breaking-down-by-gpa" class="level3">
+<h3 class="anchored" data-anchor-id="breaking-down-by-gpa">Breaking Down by GPA</h3>
+<p>To see if the pattern holds across different GPA ranges:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/actual-vs-expected-by-gpa-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="individual-level-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="individual-level-analysis">Individual-Level Analysis</h3>
+<p>How many students did better or worse than expected?</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="alerts_analysis_files/figure-html/individual-analysis-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="statistical-test" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-test">Statistical Test</h3>
+<p>Is the difference between actual and expected statistically significant?</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Statistical Comparison: Actual vs.&nbsp;Expected Fail Rates</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 5%">
+<col style="width: 23%">
+<col style="width: 26%">
+<col style="width: 15%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Alert Level</th>
+<th style="text-align: right;">N</th>
+<th style="text-align: left;">Actual Fail Rate</th>
+<th style="text-align: left;">Expected Fail Rate</th>
+<th style="text-align: left;">Difference</th>
+<th style="text-align: left;">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Medium</td>
+<td style="text-align: right;">949</td>
+<td style="text-align: left;">13.6%</td>
+<td style="text-align: left;">5.5%</td>
+<td style="text-align: left;">+8.1%</td>
+<td style="text-align: left;">&lt; 0.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">High</td>
+<td style="text-align: right;">671</td>
+<td style="text-align: left;">46.9%</td>
+<td style="text-align: left;">12.5%</td>
+<td style="text-align: left;">+34.5%</td>
+<td style="text-align: left;">&lt; 0.001</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
+<p><strong>What the analysis shows:</strong></p>
+<ul>
+<li><p><strong>Medium alert students</strong> have an actual fail rate that is higher than expected by 8.1% percentage points</p></li>
+<li><p><strong>High alert students</strong> have an actual fail rate that is higher than expected by 34.5% percentage points</p></li>
+</ul>
+<p><strong>How to interpret this:</strong></p>
+<p>If actual fail rates are <strong>higher than expected</strong>, this suggests that:</p>
+<ol type="1">
+<li>Medium/High alert students have unmeasured risk factors (motivation, personal issues, course difficulty) beyond what GPA and academic standing capture, OR</li>
+<li>The alerts/interventions weren’t sufficient to close the gap, OR</li>
+<li>Both factors are at play</li>
+</ol>
+<p>If actual fail rates were <strong>lower than expected</strong>, it would suggest interventions might be helping students perform better than their characteristics would predict.</p>
+</section>
+<section id="important-caveats" class="level3">
+<h3 class="anchored" data-anchor-id="important-caveats">Important Caveats</h3>
+<p>This analysis relies on several assumptions that may not fully hold:</p>
+<ol type="1">
+<li><p><strong>Low alert students as “typical”</strong>: Students who received positive alerts may be <em>slightly better</em> than average - instructors noticed something positive about them. This would bias our “expected” rates downward, making the gap appear larger than it truly is.</p></li>
+<li><p><strong>Course differences</strong>: Low alert students might be in different (perhaps easier) courses than students receiving warning alerts for the same GPA. We’re comparing across different contexts.</p></li>
+<li><p><strong>The compliment effect</strong>: Receiving positive feedback might itself improve outcomes for Low alert students, meaning they’re not a pure “no intervention” group.</p></li>
+<li><p><strong>Timing</strong>: We don’t know when alerts were issued relative to when students’ outcomes were determined. Early alerts allow more time for intervention.</p></li>
+<li><p><strong>Selection into alerts</strong>: Instructors who submit alerts may teach differently, or have different student populations, than those who don’t.</p></li>
+</ol>
+<p><strong>Bottom line</strong>: This analysis provides suggestive evidence about the gap between actual and expected outcomes, but cannot definitively prove whether alerts and interventions are effective. The true counterfactual - what would have happened to these students without alerts - remains unknown.</p>
+<hr>
+</section>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">7. Summary</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Key Summary Statistics</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Metric</th>
+<th style="text-align: left;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Total Alerts</td>
+<td style="text-align: left;">4,583</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Unique Students</td>
+<td style="text-align: left;">3,250</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Departments Represented</td>
+<td style="text-align: left;">64</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Instructors Submitting Alerts</td>
+<td style="text-align: left;">336</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Overall Pass Rate</td>
+<td style="text-align: left;">84.6%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pass Rate (Low Alerts Only)</td>
+<td style="text-align: left;">98.7%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pass Rate (High Alerts)</td>
+<td style="text-align: left;">52.0%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean Cumulative GPA</td>
+<td style="text-align: left;">3.15</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
