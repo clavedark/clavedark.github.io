@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harpur College (Arts &amp; Sciences) majors by department, Fall 2021–2025</title>
+<style>
+:root{
+ --color-background-primary:#ffffff;--color-background-secondary:#f6f5f1;--color-background-tertiary:#efeee8;
+ --color-background-success:#e1f5ee;--color-background-danger:#fcebeb;
+ --color-text-primary:#1c1c1a;--color-text-secondary:#5f5e5a;--color-text-tertiary:#8a8980;
+ --color-text-success:#0f6e56;--color-text-danger:#a32d2d;
+ --color-border-tertiary:rgba(0,0,0,0.13);--color-border-secondary:rgba(0,0,0,0.26);
+ --border-radius-md:8px;--border-radius-lg:12px;
+ --font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+}
+@media(prefers-color-scheme:dark){:root{
+ --color-background-primary:#26261f;--color-background-secondary:#2f2f27;--color-background-tertiary:#1d1d17;
+ --color-background-success:#085041;--color-background-danger:#501313;
+ --color-text-primary:#f3f1e9;--color-text-secondary:#b4b2a9;--color-text-tertiary:#888780;
+ --color-text-success:#5dcaa5;--color-text-danger:#f09595;
+ --color-border-tertiary:rgba(255,255,255,0.14);--color-border-secondary:rgba(255,255,255,0.28);
+}}
+*{box-sizing:border-box}
+body{font-family:var(--font-sans);background:var(--color-background-tertiary);color:var(--color-text-primary);margin:0;padding:24px;line-height:1.5}
+.wrap{max-width:840px;margin:0 auto}
+h1{font-size:21px;font-weight:500;margin:0 0 2px}
+.sub{font-size:13px;color:var(--color-text-secondary);margin:0 0 18px}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 1rem}
+.seg{display:inline-flex;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);overflow:hidden}
+.seg button{border:none;border-radius:0;padding:6px 14px;font-size:13px;background:transparent;color:var(--color-text-primary);cursor:pointer;font-family:inherit}
+.seg button[aria-pressed=true]{background:var(--color-background-secondary);font-weight:500}
+.tile{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 12px}
+.divhdr{display:flex;align-items:baseline;justify-content:space-between;margin:1.4rem 0 .6rem;padding-bottom:4px;border-bottom:0.5px solid var(--color-border-secondary)}
+.badge{font-size:12px;font-weight:500;padding:1px 7px;border-radius:var(--border-radius-md);white-space:nowrap}
+.mc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.7rem .9rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Harpur College of Arts &amp; Sciences — majors by department &amp; program</h1>
+<p class="sub">Undergraduate majors · Binghamton University · Fall 2021 → Fall 2025 · Source: OIR “Enrollment by Major Code”</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:1rem" id="cards"></div>
+<div class="ctl">
+  <span style="font-size:13px;color:var(--color-text-secondary)">Sort</span>
+  <span class="seg" id="seg-s"><button data-s="size" aria-pressed="true">Size</button><button data-s="change" aria-pressed="false">Change</button><button data-s="az" aria-pressed="false">A&ndash;Z</button></span>
+  <label style="font-size:13px;color:var(--color-text-secondary);margin-left:8px;display:inline-flex;gap:6px;align-items:center"><input type="checkbox" id="hide" checked>Hide &lt;5 majors</label>
+</div>
+<div id="out"></div>
+<p style="font-size:11.5px;color:var(--color-text-tertiary);margin-top:1rem;line-height:1.6">Each tile = one department/program. Sparkline spans Fall 2021→2025; large number is Fall 2025 headcount; badge is total change over the span. First + second majors, counted once per major; interdisciplinary programs are listed separately from departmental majors, so totals reflect the OIR breakdown.</p>
+</div>
+<script>
+const DATA=[{"c":"U","d":"School of the Arts","p":"Art History","v":[27,24,24,22,33]},{"c":"U","d":"School of the Arts","p":"Art and Design","v":[143,173,195,192,173]},{"c":"U","d":"School of the Arts","p":"Cinema","v":[62,70,81,92,67]},{"c":"U","d":"School of the Arts","p":"Music","v":[36,35,35,35,28]},{"c":"U","d":"School of the Arts","p":"Theatre","v":[58,62,61,74,78]},{"c":"U","d":"Humanities Division","p":"Africana Studies","v":[12,14,19,17,16]},{"c":"U","d":"Humanities Division","p":"Asian & Asian American Studies","v":[45,40,29,38,27]},{"c":"U","d":"Humanities Division","p":"Class & NE Studies","v":[17,0,0,0,0]},{"c":"U","d":"Humanities Division","p":"Comparative Lit","v":[15,14,13,12,15]},{"c":"U","d":"Humanities Division","p":"Eng, Gen Lit & Rhet","v":[300,275,254,246,218]},{"c":"U","d":"Humanities Division","p":"German & Russian Stud","v":[10,11,13,11,11]},{"c":"U","d":"Humanities Division","p":"Judaic Studies","v":[6,6,5,11,13]},{"c":"U","d":"Humanities Division","p":"Middle East & An Med Stud","v":[0,14,21,20,8]},{"c":"U","d":"Humanities Division","p":"Philosophy","v":[49,46,37,38,35]},{"c":"U","d":"Humanities Division","p":"Romance Languages","v":[93,76,72,67,61]},{"c":"U","d":"Sci & Math Division","p":"Biochemistry","v":[1,0,0,0,0]},{"c":"U","d":"Sci & Math Division","p":"Biological Sciences","v":[1092,1068,1070,1148,1310]},{"c":"U","d":"Sci & Math Division","p":"Chemistry","v":[136,146,121,126,122]},{"c":"U","d":"Sci & Math Division","p":"Earth Sciences","v":[0,51,53,46,31]},{"c":"U","d":"Sci & Math Division","p":"Geo Sci & Envir Stud","v":[314,0,0,0,0]},{"c":"U","d":"Sci & Math Division","p":"Mathematics & Statistics","v":[373,336,331,346,368]},{"c":"U","d":"Sci & Math Division","p":"Phys, App Phys & Astr","v":[65,70,63,57,68]},{"c":"U","d":"Sci & Math Division","p":"Psychology","v":[878,878,932,1001,1020]},{"c":"U","d":"Soc Sci Division","p":"Anthropology","v":[75,71,80,75,79]},{"c":"U","d":"Soc Sci Division","p":"Economics","v":[771,777,794,782,739]},{"c":"U","d":"Soc Sci Division","p":"Geography","v":[59,52,49,58,48]},{"c":"U","d":"Soc Sci Division","p":"History","v":[190,193,195,194,198]},{"c":"U","d":"Soc Sci Division","p":"Political Science","v":[320,321,306,265,296]},{"c":"U","d":"Soc Sci Division","p":"Sociology","v":[101,92,96,101,102]},{"c":"U","d":"Non-Div Programs","p":"Harpur Undeclared","v":[3848,3819,3722,3508,2892]},{"c":"U","d":"Inter/Cross Disciplinary Programs","p":"Biochemistry","v":[196,206,226,247,269]},{"c":"U","d":"Inter/Cross Disciplinary Programs","p":"Environmental Sci & Stud","v":[0,297,280,260,226]},{"c":"U","d":"Inter/Cross Disciplinary Programs","p":"Global & International","v":[17,21,17,19,28]},{"c":"U","d":"Inter/Cross Disciplinary Programs","p":"Global Public Health","v":[0,0,13,94,186]},{"c":"U","d":"Inter/Cross Disciplinary Programs","p":"Individ Major Prog","v":[9,3,4,2,4]},{"c":"U","d":"Inter/Cross Disciplinary Programs","p":"Integrative Neuroscience","v":[634,666,628,549,596]},{"c":"U","d":"Inter/Cross Disciplinary Programs","p":"LACAS","v":[10,5,9,9,5]},{"c":"U","d":"Inter/Cross Disciplinary Programs","p":"Linguistics","v":[96,85,64,61,46]},{"c":"U","d":"Inter/Cross Disciplinary Programs","p":"Medieval Studies","v":[4,2,6,3,5]},{"c":"U","d":"Inter/Cross Disciplinary Programs","p":"Philosophy, Politics & Law","v":[410,427,436,474,516]},{"c":"U","d":"Inter/Cross Disciplinary Programs","p":"Women Gender Sexuality St","v":[8,8,11,5,7]},{"c":"G","d":"School of the Arts","p":"Art History","v":[32,27,28,32,23]},{"c":"G","d":"School of the Arts","p":"Cinema","v":[1,0,4,8,8]},{"c":"G","d":"School of the Arts","p":"Music","v":[17,16,20,20,24]},{"c":"G","d":"School of the Arts","p":"Theatre","v":[12,10,7,9,10]},{"c":"G","d":"Humanities Division","p":"Asian & Asian American Studies","v":[5,5,3,2,1]},{"c":"G","d":"Humanities Division","p":"Comparative Lit","v":[46,50,46,48,46]},{"c":"G","d":"Humanities Division","p":"Eng, Gen Lit & Rhet","v":[95,98,93,93,93]},{"c":"G","d":"Humanities Division","p":"Philosophy","v":[37,31,35,39,36]},{"c":"G","d":"Humanities Division","p":"Romance Languages","v":[10,9,8,4,2]},{"c":"G","d":"Sci & Math Division","p":"Biological Sciences","v":[82,72,62,70,74]},{"c":"G","d":"Sci & Math Division","p":"Chemistry","v":[94,94,90,95,94]},{"c":"G","d":"Sci & Math Division","p":"Earth Sciences","v":[0,18,19,18,16]},{"c":"G","d":"Sci & Math Division","p":"Evolutionary Studies","v":[0,0,0,1,1]},{"c":"G","d":"Sci & Math Division","p":"Geo Sci & Envir Stud","v":[20,0,0,0,0]},{"c":"G","d":"Sci & Math Division","p":"Mathematics & Statistics","v":[68,67,65,65,67]},{"c":"G","d":"Sci & Math Division","p":"Phys, App Phys & Astr","v":[45,46,44,48,48]},{"c":"G","d":"Sci & Math Division","p":"Psychology","v":[75,72,59,68,71]},{"c":"G","d":"Soc Sci Division","p":"Anthropology","v":[127,99,97,90,73]},{"c":"G","d":"Soc Sci Division","p":"Economics","v":[69,63,62,58,51]},{"c":"G","d":"Soc Sci Division","p":"Geography","v":[27,24,22,23,20]},{"c":"G","d":"Soc Sci Division","p":"History","v":[74,78,69,76,75]},{"c":"G","d":"Soc Sci Division","p":"Political Science","v":[42,39,38,39,41]},{"c":"G","d":"Soc Sci Division","p":"Sociology","v":[43,37,32,26,26]},{"c":"G","d":"Inter/Cross Disciplinary Programs","p":"Anthropology","v":[0,35,25,21,19]},{"c":"G","d":"Inter/Cross Disciplinary Programs","p":"Biochemistry","v":[0,8,10,13,16]},{"c":"G","d":"Inter/Cross Disciplinary Programs","p":"Medieval Studies","v":[1,6,6,6,6]},{"c":"G","d":"Inter/Cross Disciplinary Programs","p":"TRIP","v":[50,49,53,49,48]}];
+const DIVORDER=["School of the Arts","Humanities Division","Sci & Math Division","Soc Sci Division","Non-Div Programs","Inter/Cross Disciplinary Programs"];
+const UP="var(--color-text-success)",DN="var(--color-text-danger)",FL="var(--color-text-tertiary)";
+let st={c:"U",s:"size",hide:true};
+function chg(v){const s=v[0],e=v[4];
+  if(s===0&&e===0)return{txt:"—",cls:"flat",col:FL,k:0};
+  if(s===0)return{txt:"new",cls:"up",col:UP,k:1e9};
+  if(e===0)return{txt:"ended",cls:"down",col:DN,k:-1e9};
+  const d=(e-s)/s*100;return{txt:(d>=0?"+":"")+Math.round(d)+"%",cls:d>2?"up":d<-2?"down":"flat",col:d>2?UP:d<-2?DN:FL,k:d};}
+function spark(v,col){const w=150,h=30,p=3,mn=Math.min(...v),mx=Math.max(...v),rng=mx-mn||1;
+  const xs=i=>p+i*(w-2*p)/(v.length-1),ys=val=>h-p-(val-mn)/rng*(h-2*p);
+  const pts=v.map((val,i)=>xs(i).toFixed(1)+","+ys(val).toFixed(1));
+  const area="M"+pts[0]+" L"+pts.join(" L")+" L"+xs(v.length-1).toFixed(1)+","+(h-p)+" L"+xs(0).toFixed(1)+","+(h-p)+" Z";
+  const lx=xs(v.length-1).toFixed(1),ly=ys(v[v.length-1]).toFixed(1);
+  return `<svg width="100%" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="display:block;color:${col}">
+    <path d="${area}" fill="${col}" fill-opacity="0.10" stroke="none"/>
+    <polyline points="${pts.join(' ')}" fill="none" stroke="${col}" stroke-width="1.6" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+    <circle cx="${lx}" cy="${ly}" r="2.4" fill="${col}"/></svg>`;}
+function mc(label,val,sub,col){return `<div class="mc"><div style="font-size:12px;color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${label}</div>
+  <div style="font-size:19px;font-weight:500;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${val}</div>
+  ${sub?`<div style="font-size:12px;font-weight:500;margin-top:1px;color:${col||'var(--color-text-secondary)'}">${sub}</div>`:''}</div>`;}
+function render(){
+  const rows=DATA.filter(r=>r.c===st.c).filter(r=>!st.hide||Math.max(...r.v)>=5);
+  const cardsT=rows.reduce((a,r)=>a+r.v[4],0);
+  const cards2021=rows.reduce((a,r)=>a+r.v[0],0);
+  const sorted=[...rows].sort((a,b)=>chg(b.v).k-chg(a.v).k);
+  const gain=sorted[0],drop=sorted[sorted.length-1];
+  const tot=chg([cards2021,0,0,0,cardsT]);
+  document.getElementById('cards').innerHTML=
+    mc("Programs shown",rows.length,"")+
+    mc("Total majors '25",cardsT.toLocaleString(),tot.txt+" vs '21",tot.col)+
+    mc("Top gainer",gain.p,chg(gain.v).txt,UP)+
+    mc("Steepest drop",drop.p,chg(drop.v).txt,DN);
+  let html="";
+  for(const dv of DIVORDER){
+    let g=rows.filter(r=>r.d===dv);if(!g.length)continue;
+    if(st.s==="size")g.sort((a,b)=>b.v[4]-a.v[4]);
+    else if(st.s==="change")g.sort((a,b)=>chg(b.v).k-chg(a.v).k);
+    else g.sort((a,b)=>a.p.localeCompare(b.p));
+    const dt=g.reduce((a,r)=>a+r.v[4],0),d0=g.reduce((a,r)=>a+r.v[0],0),dc=chg([d0,0,0,0,dt]);
+    html+=`<div class="divhdr"><span style="font-size:15px;font-weight:500">${dv}</span>
+      <span style="font-size:12.5px;color:var(--color-text-secondary)">${dt.toLocaleString()} majors &nbsp;<span style="color:${dc.col};font-weight:500">${dc.txt}</span></span></div>`;
+    html+=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">`;
+    for(const r of g){const c=chg(r.v);
+      html+=`<div class="tile"><div style="font-size:12.5px;line-height:1.25;min-height:31px;margin-bottom:4px">${r.p}</div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:5px">
+          <span style="font-size:21px;font-weight:500">${r.v[4].toLocaleString()}</span>
+          <span class="badge" style="color:${c.col};background:${c.cls==='up'?'var(--color-background-success)':c.cls==='down'?'var(--color-background-danger)':'var(--color-background-secondary)'}">${c.txt}</span>
+        </div>${spark(r.v,c.col)}
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--color-text-tertiary);margin-top:1px"><span>'21</span><span>'25</span></div></div>`;}
+    html+=`</div>`;
+  }
+  document.getElementById('out').innerHTML=html;
+}
+document.getElementById('seg-s').onclick=e=>{const b=e.target.closest('button');if(!b)return;st.s=b.dataset.s;[...e.currentTarget.children].forEach(x=>x.setAttribute('aria-pressed',x===b));render();};
+document.getElementById('hide').onchange=e=>{st.hide=e.target.checked;render();};
+render();
+</script>
+</body>
+</html>
