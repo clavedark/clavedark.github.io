@@ -1,0 +1,58 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Quality of living</title><style>
+:root{--surface:#fcfcfb;--panel:#fff;--ink:#0b0b0b;--ink2:#52514e;--ink3:#8a8a85;--line:#e3e3df;--accent:#256abf}
+@media (prefers-color-scheme:dark){:root{--surface:#1a1a19;--panel:#232322;--ink:#fff;--ink2:#c3c2b7;--ink3:#8a8a85;--line:#3a3a38;--accent:#3987e5}}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--surface);color:var(--ink);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:26px 28px;max-width:430px;width:calc(100% - 40px)}
+h1{font-size:17px;font-weight:640;margin:0 0 4px}
+p{color:var(--ink2);font-size:13px;margin:0 0 16px}
+form{display:flex;gap:8px}
+input{flex:1;font:inherit;font-size:14px;padding:9px 11px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink)}
+button{font:inherit;font-size:14px;padding:9px 16px;border:0;border-radius:7px;background:var(--accent);color:#fff;cursor:pointer;font-weight:560}
+button:disabled{opacity:.55;cursor:default}
+.msg{font-size:12.5px;color:var(--ink3);margin-top:11px;min-height:1.4em}
+.msg.bad{color:#e8590c}
+</style></head><body>
+<div class="box">
+  <h1>Quality of living</h1>
+  <p>This page is encrypted. Enter the passphrase to read it.</p>
+  <form id="f"><input id="p" type="password" autocomplete="current-password" placeholder="Passphrase" autofocus><button id="b">Open</button></form>
+  <div class="msg" id="m"></div>
+</div>
+<script>
+const SALT=Uint8Array.from(atob("D3gAAJFMAsbxrQGUGIJeJQ=="),c=>c.charCodeAt(0));
+const IV=Uint8Array.from(atob("CYKtCbwQkuvl5bCC"),c=>c.charCodeAt(0));
+const ITER=300000;
+const B64="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";
+function bytes(b64){const s=atob(b64),a=new Uint8Array(s.length);for(let i=0;i<s.length;i++)a[i]=s.charCodeAt(i);return a}
+const m=document.getElementById("m"),b=document.getElementById("b");
+const KEYNAME="ql-pass";
+async function open_(pw){
+  const base=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);
+  const key=await crypto.subtle.deriveKey({name:"PBKDF2",salt:SALT,iterations:ITER,hash:"SHA-256"},
+    base,{name:"AES-GCM",length:256},false,["decrypt"]);
+  const plain=await crypto.subtle.decrypt({name:"AES-GCM",iv:IV},key,bytes(B64));
+  const html=new TextDecoder().decode(plain);
+  try{sessionStorage.setItem(KEYNAME,pw)}catch(e){}
+  document.open(); document.write(html); document.close();
+}
+// If the passphrase already worked this session, open without asking again. It is held in
+// sessionStorage, so it dies with the tab and never touches disk or the network.
+(async()=>{ let saved=null; try{saved=sessionStorage.getItem(KEYNAME)}catch(e){}
+  if(saved){ m.textContent="Opening…"; try{ await open_(saved) }catch(e){
+    try{sessionStorage.removeItem(KEYNAME)}catch(_){} m.textContent=""; } } })();
+document.getElementById("f").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const pw=document.getElementById("p").value; if(!pw) return;
+  b.disabled=true; m.className="msg"; m.textContent="Decrypting\u2026";
+  try{
+    // document.write rather than a blob URL: it keeps the page's own address, so the
+    // relative links between these pages still resolve.
+    await open_(pw);
+  }catch(err){
+    b.disabled=false; m.className="msg bad"; m.textContent="That passphrase did not work.";
+  }
+});
+</script></body></html>
